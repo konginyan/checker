@@ -1,14 +1,11 @@
 package com.checker.controller;
 
 import com.checker.Exception.CheckException;
-import com.checker.util.CheckUtil;
-import com.checker.util.ClimbUtil;
-import com.checker.util.ResultHandler;
+import com.checker.util.*;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -25,10 +22,14 @@ public class compare {
     @PostMapping(value = "/check")
     public Map<String,Object> check(@RequestParam("src") String source,
                                       @RequestParam("tar") String target) throws CheckException{
-        List<String> sameList = CheckUtil.getSame(source,target,CheckUtil.getUnits(source));
-        Double sameRate = CheckUtil.getSameRate(source,sameList);
+//        List<String> sameList = CheckUtil.getSame(source,target,CheckUtil.getUnits(source));
+        List<String> sameListFull = fullMatch.cal(source,target);
+        Double sameRate = CheckUtil.getSameRate(source,sameListFull);
+        int needStep  = fuzzyMatch.cal(source, target);
+//        int size = source.length()>target.length()?source.length():target.length();
+//        Double matchRate = fuzzyMatch.getMatchRate(needStep,size);
         Double similarRate = CheckUtil.getSimilarRate(source,target);
-        return ResultHandler.handleResult(sameList,sameRate,similarRate);
+        return ResultHandler.handleResult(sameListFull,sameRate,similarRate,needStep);
     }
 
     @PostMapping(value = "/auto_check")
@@ -48,10 +49,14 @@ public class compare {
             for(Element p:page){
                 result += p.text();
             }
-            List<String> sameList = CheckUtil.getSame(source,result,CheckUtil.getUnits(source));
-            Double sameRate = CheckUtil.getSameRate(source,sameList);
+//            List<String> sameList = CheckUtil.getSame(source,result,CheckUtil.getUnits(source));
+            List<String> sameListFull = fullMatch.cal(source,result);
+            Double sameRate = CheckUtil.getSameRate(source,sameListFull);
+            int needStep  = fuzzyMatch.cal(source, result);
+//            int size = source.length()>result.length()?source.length():result.length();
+//            Double matchRate = fuzzyMatch.getMatchRate(needStep,size);
             Double similarRate = CheckUtil.getSimilarRate(source,result);
-            Map<String,Object> a_url = ResultHandler.getResult(sameList,sameRate,similarRate);
+            Map<String,Object> a_url = ResultHandler.getResult(sameListFull,sameRate,similarRate,needStep);
             a_url.put("url",webRoot + url);
             urlList.add(a_url);
         }

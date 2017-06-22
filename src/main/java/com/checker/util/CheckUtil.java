@@ -37,7 +37,16 @@ public class CheckUtil {
     }
 
     public static boolean unitMatch(String unit, String target){
-        return target.matches(".*"+unit+".*");
+        String reg = unit.replaceAll("\\\\","\\\\\\\\")
+                .replaceAll("\\(","\\\\(")
+                .replaceAll("\\)","\\\\)")
+                .replaceAll("\\[","\\\\[")
+                .replaceAll("\\]","\\\\]")
+                .replaceAll("\\?","\\\\?")
+                .replaceAll("\\+","\\\\+")
+                .replaceAll("\\*","\\\\*")
+                .replaceAll("\\.","\\\\.");
+        return target.matches(".*"+reg+".*");
     }
 
     public static String preTreat(String origin){
@@ -48,13 +57,19 @@ public class CheckUtil {
         return origin.trim().replaceAll("\\pP|\\s","");
     }
 
+    public static String clearWrap(String origin){
+        return origin.replaceAll("\\r"," ").replaceAll("\\n"," ");
+    }
+
     public static List<String> getSame(String origin, String target, List<String> units){
+        origin = clearWrap(origin);
+        target = clearWrap(origin);
         List<String> sameUnits = new ArrayList<>();
         List<String> engUnits = new ArrayList<>();
         int index = 0;
         int unitCount = 0;
         origin = preTreat(origin);
-        System.out.println(origin);
+//        System.out.println(origin);
         String temp = "";
         for(String unit: units){
             while(origin.charAt(index)==' '){
@@ -79,7 +94,7 @@ public class CheckUtil {
         for (String s: engUnits){
             temp += s + " ";
             engCount ++;
-            System.out.println(temp);
+//            System.out.println(temp);
             if(engCount==1)continue;
             if(unitMatch(temp.trim(),target.toLowerCase())){
 //                System.out.println(temp);

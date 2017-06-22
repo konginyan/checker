@@ -33,18 +33,19 @@ public class ResultHandler {
         return result;
     }
 
-    public static Map<String, Object> handleResult(List<String> same, Double sameRate, Double similarRate){
+    public static Map<String, Object> handleResult(List<String> same, Double sameRate, Double similarRate, int needStep){
         Map<String, Object> result = new HashMap<>();
         result.put("result", SUCCESS);
-        result.put("data", getResult(same, sameRate, similarRate));
+        result.put("data", getResult(same, sameRate, similarRate, needStep));
         return result;
     }
 
-    public static Map<String,Object> getResult(List<String> same, Double sameRate, Double similarRate){
+    public static Map<String,Object> getResult(List<String> same, Double sameRate, Double similarRate, int needStep){
         Map<String,Object> result = new HashMap<>();
         result.put("sameList",same);
         result.put("sameRate",sameRate);
         result.put("similarRate",similarRate);
+        result.put("needStep",needStep);
         return result;
     }
 
@@ -58,7 +59,7 @@ public class ResultHandler {
     public static Map<String,Object> getException(Exception e){
         Map<String,Object> result = new HashMap<>();
         result.put("code" , 100);
-        result.put("error_message",e.getMessage());
+        result.put("error_message",e);
         return result;
     }
 }
