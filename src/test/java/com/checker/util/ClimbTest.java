@@ -40,7 +40,7 @@ public class ClimbTest {
             List<String> sameList = CheckUtil.getSame(source,result,CheckUtil.getUnits(source));
             Double sameRate = CheckUtil.getSameRate(source,sameList);
             Double similarRate = CheckUtil.getSimilarRate(source,result);
-            System.out.println(webRoot + url + ResultHandler.getResult(sameList,sameRate,similarRate,1));
+            System.out.println(webRoot + url + ResultHandler.getResult(sameList,sameRate,similarRate,1,10));
         }
     }
 }
