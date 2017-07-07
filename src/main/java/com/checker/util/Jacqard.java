@@ -26,6 +26,6 @@ public class Jacqard {
                 if(originMap.get(unit)==0) originMap.remove(unit);
             }
         }
-        return sim/sum;
+        return CheckUtil.doubleFormat(sim/sum);
     }
 }

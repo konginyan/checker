@@ -33,18 +33,19 @@ public class ResultHandler {
         return result;
     }
 
-    public static Map<String, Object> handleResult(List<String> same, Double sameRate, Double similarRate, int needStep, int srclen){
+    public static Map<String, Object> handleResult(List<String> same, Double sameRate, Double jacRate, Double cosRate, int needStep, int srclen){
         Map<String, Object> result = new HashMap<>();
         result.put("result", SUCCESS);
-        result.put("data", getResult(same, sameRate, similarRate, needStep, srclen));
+        result.put("data", getResult(same, sameRate, jacRate, cosRate, needStep, srclen));
         return result;
     }
 
-    public static Map<String,Object> getResult(List<String> same, Double sameRate, Double similarRate, int needStep, int srclen){
+    public static Map<String,Object> getResult(List<String> same, Double sameRate, Double jacRate, Double cosRate, int needStep, int srclen){
         Map<String,Object> result = new HashMap<>();
         result.put("sameList",same);
         result.put("sameRate",sameRate);
-        result.put("similarRate",similarRate);
+        result.put("jacRate",jacRate);
+        result.put("cosRate",cosRate);
         result.put("needStep",needStep);
         result.put("sourceLength",srclen);
         return result;
