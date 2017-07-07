@@ -28,9 +28,9 @@ public class compare {
         int needStep  = fuzzyMatch.cal(source, target);
 //        int size = source.length()>target.length()?source.length():target.length();
 //        Double matchRate = fuzzyMatch.getMatchRate(needStep,size);
-        double jacDis = Jacqard.JacqardDistance(source,target);
-        Double similarRate = CheckUtil.getSimilarRate(source,target);
-        return ResultHandler.handleResult(sameListFull,sameRate,jacDis,needStep,source.length());
+        double jacRate = Jacqard.JacqardDistance(source,target);
+        Double cosRate = CheckUtil.getSimilarRate(source,target);
+        return ResultHandler.handleResult(sameListFull,sameRate,jacRate,cosRate,needStep,source.length());
     }
 
     @PostMapping(value = "/auto_check")
@@ -56,8 +56,9 @@ public class compare {
             int needStep  = fuzzyMatch.cal(source, result);
 //            int size = source.length()>result.length()?source.length():result.length();
 //            Double matchRate = fuzzyMatch.getMatchRate(needStep,size);
-            Double similarRate = CheckUtil.getSimilarRate(source,result);
-            Map<String,Object> a_url = ResultHandler.getResult(sameListFull,sameRate,similarRate,needStep,source.length());
+            double jacRate = Jacqard.JacqardDistance(source,result);
+            Double cosRate = CheckUtil.getSimilarRate(source,result);
+            Map<String,Object> a_url = ResultHandler.getResult(sameListFull,sameRate,jacRate,cosRate,needStep,source.length());
             a_url.put("url",webRoot + url);
             urlList.add(a_url);
         }
