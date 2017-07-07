@@ -25,6 +25,7 @@ public class fullMatch {
         if(temp.matches("[A-Za-z\\s\\pP]+")){
             len = temp.split("\\s|\\pP").length;
         }
+        else len = temp.length();
         if(len>=min)result.add(temp);
         return result;
     }
